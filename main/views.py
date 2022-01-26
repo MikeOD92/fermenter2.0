@@ -54,3 +54,9 @@ def updateRecipe(request, pk):
     return Response({
         'data': serializer.data
         }, status=status.HTTP_202_ACCEPTED)
+
+@api_view(["DELETE"])
+def deleteRecipe(request, pk):
+    recipe = Recipe.objects.get(id=pk)
+    recipe.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
