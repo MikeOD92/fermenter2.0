@@ -8,5 +8,6 @@ urlpatterns = [
     path('recipes/create/', views.makeRecipe, name="new_recipe"),
     path('recipes/update/<str:pk>/', views.updateRecipe, name="upate_recipe"),
     path('recipes/delete/<str:pk>/', views.deleteRecipe, name="delete_recipe"),
-
+    
+    path('comments/create/', views.postComment, name="post_comment")
 ]

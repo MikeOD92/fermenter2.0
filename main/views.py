@@ -4,9 +4,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import *
-from .serializer import RecipeSerializer
+from .serializer import CommentSerializer, RecipeSerializer
 
-# Create your views here.
+# General - View Routes
+
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
@@ -21,6 +22,8 @@ def getRoutes(request):
         '/api/recipes/update/<id>/',
     ]
     return Response(routes)
+
+######### RECIPE VIEWS ##########
 
 @api_view(['GET'])
 def getRecipes(request, pk=None):
@@ -60,3 +63,13 @@ def deleteRecipe(request, pk):
     recipe = Recipe.objects.get(id=pk)
     recipe.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+######### Comments VIEWS ##########
+@api_view(['POST'])
+def postComment(request):
+    serializer = CommentSerializer(data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

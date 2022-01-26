@@ -15,7 +15,7 @@ class Recipe(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    recipe = models.ForeignKey(Recipe, on_delete=models.SET_NULL, null=True)
+    recipe = models.ForeignKey(Recipe, on_delete=models.SET_NULL, null=True, related_name="comments")
     comment = models.TextField(blank=False, null=True)
     createdAt = models.DateTimeField(auto_now_add=True)
 
