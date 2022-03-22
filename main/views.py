@@ -3,9 +3,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import *
-from .serializer import CommentSerializer, RecipeSerializer
-
+from .serializers.recipe_serializers import CommentSerializer, RecipeSerializer
+from .models.recipe_models import *
 # General - View Routes
 
 @api_view(['GET'])

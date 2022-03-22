@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'main.apps.MainConfig',
+    'user.apps.UserConfig'
 ]
 
 MIDDLEWARE = [
@@ -118,6 +119,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+AUTH_USER_MODEL = 'user.CustomUser'
 
 STATIC_URL = 'static/'
 
