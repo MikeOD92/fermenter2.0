@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # from backend.user.models import CustomUser
 from user.models import CustomUser
+
 # Create your models here.
 class Recipe(models.Model):
     title = models.CharField(max_length=200, blank=False, null=False)
