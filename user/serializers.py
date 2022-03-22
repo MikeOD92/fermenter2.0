@@ -14,7 +14,7 @@ class FriendRealtedField(serializers.StringRelatedField):
     def to_internal_value(self, data):
         return data
 
-class UserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
 
     friend_list = FriendRealtedField(many=True)
 

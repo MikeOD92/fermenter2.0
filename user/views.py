@@ -15,10 +15,12 @@ def get_users(request, pk=None):
     users = CustomUser.objects.all()
     if pk:
         user = CustomUser.objects.get(id=pk)
-        serializer = UserSerializer(CustomUser, many=False)
-        return CustomUser(serializer.data)
+        serializer = CustomUserSerializer(user, many=False)
+        return Response(serializer.data)
 
-    serializer = UserSerializer(CustomUser, many=True)
+    serializer = CustomUserSerializer(users, many=True)
 
     return Response(serializer.data) 
 
+# @api_view(['GET'])
+# def get_friends(request):
