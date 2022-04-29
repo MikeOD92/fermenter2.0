@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from ..models import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from .recipe_serializers import RecipeRelatedField
 
 class FriendSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,10 +20,11 @@ class FriendRealtedField(serializers.StringRelatedField):
 class CustomUserSerializer(serializers.ModelSerializer):
 
     friend_list = FriendRealtedField(many=True)
+    recipe_list = RecipeRelatedField(many=True)
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'profile_pic', 'friend_list']
+        fields = ['username', 'first_name', 'last_name', 'email', 'profile_pic', 'friend_list', 'recipe_list']
         extra_kawrgs = {
             'password' : { 'write_only' : True}
         }
