@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User 
-from ..models.recipe_models import *
+from ..models import *
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,6 +25,14 @@ class RecipeImageRelatedField(serializers.StringRelatedField):
 
     def to_internal_value(self, data):
         return data
+
+class RecipeRelatedField(serializers.StringRelatedField):
+    def to_representation(self, value):
+        return RecipeSerializer(value).data
+
+    def to_internal_value(self, data):
+        return data
+        # does this need to be move below the RecipeSerializer?
 
 class RecipeSerializer(serializers.ModelSerializer):
 
