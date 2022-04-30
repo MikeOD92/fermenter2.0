@@ -26,14 +26,6 @@ class RecipeImageRelatedField(serializers.StringRelatedField):
     def to_internal_value(self, data):
         return data
 
-class RecipeRelatedField(serializers.StringRelatedField):
-    def to_representation(self, value):
-        return RecipeSerializer(value).data
-
-    def to_internal_value(self, data):
-        return data
-        # does this need to be move below the RecipeSerializer?
-
 class RecipeSerializer(serializers.ModelSerializer):
 
     comments = CommentRealtedField(many=True)
@@ -42,3 +34,12 @@ class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = ['id','title', 'user', 'catagory', 'description', 'ingredients', 'method', 'comments', 'recipe_images']
+
+# class MyRecipesSerializer(serializers.ModelSerializer):
+
+class RecipeRelatedField(serializers.StringRelatedField):
+    def to_representation(self, value):
+        return RecipeSerializer(value).data
+
+    def to_internal_value(self, data):
+        return data

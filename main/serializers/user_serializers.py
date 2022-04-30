@@ -5,35 +5,27 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from .recipe_serializers import RecipeRelatedField
 
-class FriendSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Friend
-        fields = "__all__"
-
-class FriendRealtedField(serializers.StringRelatedField):
-    def to_representation(self, value):
-        return FriendSerializer(value).data
-    
-    def to_internal_value(self, data):
-        return data
-
 class CustomUserSerializer(serializers.ModelSerializer):
 
-    friend_list = FriendRealtedField(many=True)
     recipe_list = RecipeRelatedField(many=True)
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'profile_pic', 'friend_list', 'recipe_list']
+        fields = ['username', 'first_name', 'last_name', 'email', 'profile_pic', 'friends', 'recipe_list']
         extra_kawrgs = {
             'password' : { 'write_only' : True}
         }
+
+class NonFriendUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'first_name', 'last_name', 'profile_pic', 'friends']
 
 class CustomUserSerializerWithToken(CustomUserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = CustomUser
-        fields = ['username','first_name', 'last_name', 'email', 'profile_pic', 'friend_list', 'password', 'token']
+        fields = ['username','first_name', 'last_name', 'email', 'profile_pic', 'friends', 'password', 'token']
         extra_kawrgs = {
             'password' : { 'write_only' : True}
         }

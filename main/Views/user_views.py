@@ -49,20 +49,38 @@ def update_password(request):
 def get_users(request, pk=None):
 
     users = CustomUser.objects.all()
+    friendlist = CustomUser.objects.get(id=request.user.id).friends.all()
+
     if pk:
         user = CustomUser.objects.get(id=pk)
-        serializer = CustomUserSerializer(user, many=False)
+        if user in friendlist:
+            serializer = CustomUserSerializer(user, many=False)
+            return Response(serializer.data)
+
+        serializer = NonFriendUserSerializer(user, many=False)
         return Response(serializer.data)
 
-    serializer = CustomUserSerializer(users, many=True)
+    serializer = NonFriendUserSerializer(users, many=True)
 
     return Response(serializer.data) 
 
 @api_view(['GET'])
-def get_friends(request):
+def friend_list(request, pk=None):
 
-    user = request.user
-    print(user)
-    # serializer = CustomUserSerializer(user, many=False)
+    user = request.user.id
 
-    return Response({"object": "message"})
+    friendlist = CustomUser.objects.get(id=user).friends.all()
+
+    serializer = CustomUserSerializer(friendlist, many=True)
+
+    return Response(serializer.data) 
+
+@api_view(['GET'])
+def profile_view(request):
+
+    user = CustomUser.objects.get(id = request.user.id)
+
+    serializer = CustomUserSerializer(user)
+
+    return Response(serializer.data) 
+

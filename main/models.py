@@ -20,7 +20,7 @@ class Friend(models.Model):### this is maybe not the way to do it. many to many 
 # Recipe Models
 class Recipe(models.Model):
     title = models.CharField(max_length=200, blank=False, null=False)
-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='recipe_list')
     catagory = models.CharField(max_length=200, blank=False, null=False)
     description = models.TextField(blank=False, null=True)
     ingredients = models.TextField(blank=False, null=True)
