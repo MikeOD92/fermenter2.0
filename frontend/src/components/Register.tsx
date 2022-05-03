@@ -1,5 +1,6 @@
 import React, { useRef, SyntheticEvent } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const firstName = useRef<HTMLInputElement | null>(null);
@@ -8,6 +9,8 @@ export default function Register() {
   const regEmail = useRef<HTMLInputElement | null>(null);
   const password = useRef<HTMLInputElement | null>(null);
   const confirm = useRef<HTMLInputElement | null>(null);
+
+  let navigate = useNavigate();
 
   const register = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -22,7 +25,9 @@ export default function Register() {
         email: regEmail.current?.value,
         password: password.current?.value,
       });
-      console.log(response);
+      if (response.status === 200) {
+        navigate("/home");
+      }
       return response;
     } else {
       console.log("password does not match");

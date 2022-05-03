@@ -1,10 +1,12 @@
 import React, { useRef, SyntheticEvent } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const loginUser = useRef<HTMLInputElement | null>(null);
   const loginPass = useRef<HTMLInputElement | null>(null);
 
+  let navigate = useNavigate();
   const login = async (e: SyntheticEvent) => {
     e.preventDefault();
     if (loginUser.current?.value && loginPass.current?.value) {
@@ -12,7 +14,9 @@ export default function Login() {
         username: loginUser.current.value,
         password: loginPass.current.value,
       });
-      console.log(response);
+      if (response.status === 200) {
+        navigate("/home");
+      }
     }
   };
   return (
