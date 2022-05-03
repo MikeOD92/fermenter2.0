@@ -2,7 +2,7 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
-import Register from "./pages/Register";
+import Portal from "./pages/Portal";
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
         <Header />
         <Routes>
           <Route path={"/"} element={<Home />} />
-          <Route path={"/login"} element={<Register />} />
+          <Route path={"/login"} element={<Portal />} />
         </Routes>
       </main>
     </div>
