@@ -18,7 +18,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(['POST'])
 def register(request):
     data = request.data
-
+    print(request.data)
     try: 
         user = CustomUser.objects.create(
             username = data['username'],
@@ -27,7 +27,7 @@ def register(request):
             email = data['email'],
             password = make_password(data['password'])
         )
-        serializer = TokenObtainPairSerializer(user, many=False)
+        serializer = CustomUserSerializerWithToken(user, many=False)
         return Response(serializer.data)
     except:
         message = {'detail': 'User with this email already exists'}

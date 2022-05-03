@@ -25,7 +25,7 @@ class CustomUserSerializerWithToken(CustomUserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = CustomUser
-        fields = ['username','first_name', 'last_name', 'email', 'profile_pic', 'friends', 'password', 'token']
+        fields = ['id', 'username','first_name', 'last_name', 'email', 'profile_pic', 'friends', 'password', 'token']
         extra_kawrgs = {
             'password' : { 'write_only' : True}
         }
