@@ -1,29 +1,34 @@
 import React, { useRef, SyntheticEvent } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../hooks";
+import { login } from "../actions/userActions";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
   const loginUser = useRef<HTMLInputElement | null>(null);
   const loginPass = useRef<HTMLInputElement | null>(null);
 
+  // const dispatch = useAppDispatch();
   let navigate = useNavigate();
-  const login = async (e: SyntheticEvent) => {
+  let dispatch = useAppDispatch();
+
+  const userLogin = async (e: SyntheticEvent) => {
     e.preventDefault();
-    if (loginUser.current?.value && loginPass.current?.value) {
-      const response = await axios.post("http://localhost:8000/api/login", {
-        username: loginUser.current.value,
-        password: loginPass.current.value,
-      });
-      if (response.status === 200) {
-        navigate("/home");
-      }
+    if (loginUser.current !== null && loginPass.current !== null) {
+      await dispatch(login(loginUser.current.value, loginPass.current.value));
     }
+
+    // if (response.status === 200) {
+    //   navigate("/home");
+    // }
+    // }
   };
   return (
     <>
       <h2> Sign in </h2>
       <form
-        onSubmit={login}
+        onSubmit={userLogin}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
         <div className="mb-5">
