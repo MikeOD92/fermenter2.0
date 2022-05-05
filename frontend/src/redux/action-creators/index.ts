@@ -2,20 +2,22 @@ import { ActionType } from "../actions-types";
 import { Dispatch } from "redux";
 import { Action } from "../actions";
 import axios from "axios";
-// import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ThunkAction } from "redux-thunk";
+import { RootState } from "../store";
+import { AnyAction } from "@reduxjs/toolkit";
 
-export const login = (username: string, password: string) => /* async () => */ {
-  // const { data } = await axios.post("http://localhost:8000/api/login", {
-  //   username: username,
-  //   password: password,
-  // });
-
-  // console.log(data);
-
-  return (dispatch: Dispatch<Action>) => {
+export const login = (
+  username: string,
+  password: string
+): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch) => {
+    const { data } = await axios.post("http://localhost:8000/api/login", {
+      username: username,
+      password: password,
+    });
     dispatch({
       type: ActionType.LOGIN,
-      payload: { message: "issues with async" },
+      payload: data,
     });
   };
 };
