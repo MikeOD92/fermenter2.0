@@ -15,6 +15,7 @@ export const login = (
       username: username,
       password: password,
     });
+    localStorage.setItem("loginInfo", JSON.stringify(data));
     dispatch({
       type: ActionType.LOGIN,
       payload: data,

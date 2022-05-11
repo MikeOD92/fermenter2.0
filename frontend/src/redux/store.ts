@@ -39,8 +39,38 @@ import { reducers } from "./index";
 // });
 const middleware = [thunk];
 
+const getLoginFromLocalStorage = () => {
+  try {
+    const userInfoFromStorage = localStorage.getItem("loginInfo");
+    if (userInfoFromStorage) {
+      return JSON.parse(userInfoFromStorage);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const preloadedState = {
+  default: {
+    user: {
+      loading: false,
+      loginInfo: getLoginFromLocalStorage(),
+    },
+  },
+};
+
+// if(localStorage.getItem("userInfo")){
+//   const userInfoFromStorage =
+
+// }
+
+// const userInfoFromStorage = localStorage.getItem("userInfo")
+//   ? JSON.parse(localStorage.getItem("userInfo"))
+//   : "";
+
 const store = configureStore({
   reducer: reducers,
+  preloadedState,
   middleware,
 });
 

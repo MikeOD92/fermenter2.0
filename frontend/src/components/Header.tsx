@@ -13,7 +13,9 @@ const Header: FC = () => {
             <li className="p-5">
               <Link to="/login">Log in </Link>{" "}
             </li>
-            <li className="p-5"> Feed </li>
+            <li className="p-5">
+              <Link to="/">Feed</Link>{" "}
+            </li>
             <li className="p-5"> Profile </li>
             <li className="p-5"> Friends</li>
           </ul>
