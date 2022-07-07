@@ -11,7 +11,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ['username', 'first_name', 'last_name', 'email', 'profile_pic', 'friends', 'recipe_list']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'profile_pic', 'friends', 'recipe_list']
         extra_kawrgs = {
             'password' : { 'write_only' : True}
         }
@@ -19,7 +19,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 class NonFriendUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username', 'first_name', 'last_name', 'profile_pic', 'friends']
+        fields = ['id','username', 'first_name', 'last_name', 'profile_pic', 'friends']
 
 class CustomUserSerializerWithToken(CustomUserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
