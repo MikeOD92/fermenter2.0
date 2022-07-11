@@ -5,10 +5,24 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from .recipe_serializers import RecipeRelatedField
 
+# class FriendSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Friend
+#         fields = '__all__'
+
+# class FriendRelatedField(serializers.StringRelatedField):
+#     def to_representation(self, value):
+#         return FriendSerializer(value).data
+#         # return CustomUserSerializer(value).data
+
+#     def to_internal_value(self, data):
+#         return data
+
 class CustomUserSerializer(serializers.ModelSerializer):
 
     recipe_list = RecipeRelatedField(many=True)
-
+    # friends = FriendRelatedField(many=True)
+    
     class Meta:
         model = CustomUser
         fields = ['id', 'username', 'first_name', 'last_name', 'email', 'profile_pic', 'friends', 'recipe_list']
@@ -23,6 +37,7 @@ class NonFriendUserSerializer(serializers.ModelSerializer):
 
 class CustomUserSerializerWithToken(CustomUserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
+    # friends = FriendRelatedField(many=True)
     class Meta:
         model = CustomUser
         fields = ['id', 'username','first_name', 'last_name', 'email', 'profile_pic', 'friends', 'password', 'token']
@@ -45,3 +60,4 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             data[k] = v
 
         return data
+

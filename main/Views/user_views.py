@@ -4,7 +4,8 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render
 from rest_framework import status, exceptions
-from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from ..serializers.user_serializers import *
@@ -34,6 +35,7 @@ def register(request):
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['PUT'])
+@permission_classes([IsAuthenticated])
 def update_password(request):
     user = request.user
 
@@ -65,6 +67,7 @@ def get_users(request, pk=None):
     return Response(serializer.data) 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def friend_list(request, pk=None):
 
     user = request.user.id
@@ -84,3 +87,25 @@ def profile_view(request):
 
     return Response(serializer.data) 
 
+@api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
+def send_friendrequest(request, friendId):
+    from_user = request.user
+    to_user = CustomUser.objects.get(id=friendId)
+    friend_request, created = Friend_Request.objects.get_or_create(from_user = from_user, to_user = to_user)
+    if created:
+        return Response('Friend request sent.')
+    else:
+        return Response('Friend Request already sent.')
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def accept_friendrequest(request, requestId):
+    friend_request = Friend_Request.objects.get(id=requestId)
+    if friend_request.to_user == request.user:
+        friend_request.to_user.friends.add(friend_request.from_user)
+        friend_request.from_user.friends.add(friend_request.to_user)
+        friend_request.delete()
+        return Response('accepted')
+    else:
+        return Response('friend Request not accepted')

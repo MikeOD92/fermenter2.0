@@ -13,9 +13,9 @@ class CustomUser(AbstractUser):
     profile_pic = models.ImageField(upload_to="upload/profile_pic", blank=True )
     friends = models.ManyToManyField("CustomUser", blank=True)
 
-class Friend(models.Model):### this is maybe not the way to do it. many to many field kind of makes more sense. 
-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, related_name='friend_list')
-    friend = models.ManyToManyField(CustomUser, related_name="friend" )
+class Friend_Request(models.Model):
+    from_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='from_user')
+    to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='to_user')
 
 # Recipe Models
 class Recipe(models.Model):
