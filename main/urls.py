@@ -20,7 +20,8 @@ urlpatterns = [
     path('users/', user_views.get_users, name="user_list"),
     path('users/<str:pk>', user_views.get_users, name="view_user"),
     path('friends/', user_views.friend_list,name="friend_list" ),
-    path('myprofile', user_views.profile_view, name="profile_view" ),
+    path('profile', user_views.profile_view, name="my_profile_view" ),
+    path('profile/<str:username>', user_views.profile_view, name="profile_view" ),
     path('send_friend_request/<int:friendId>', user_views.send_friendrequest, name="new friend request"),
     path('accept_friend_request/<int:requestId>', user_views.accept_friendrequest, name='accept friend request')
 ]

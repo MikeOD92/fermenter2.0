@@ -33,7 +33,7 @@ def getRecipes(request, pk=None):
 
     if pk:
         recipe = Recipe.objects.get(id=pk)
-        if recipe.user in friends:
+        if recipe.user in friends or recipe.user == request.user:
             serializer = RecipeSerializer(recipe, many=False)
             return Response(serializer.data)
         else:

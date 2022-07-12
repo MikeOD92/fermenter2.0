@@ -79,8 +79,13 @@ def friend_list(request, pk=None):
     return Response(serializer.data) 
 
 @api_view(['GET'])
-def profile_view(request):
+def profile_view(request, username = None):
+    if username:
+        user = CustomUser.objects.get(username = username)
+        serializer = CustomUserSerializer(user)
 
+        return Response(serializer.data) 
+        
     user = CustomUser.objects.get(id = request.user.id)
 
     serializer = CustomUserSerializer(user)
