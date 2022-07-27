@@ -3,7 +3,6 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-
 from ..serializers.recipe_serializers import CommentSerializer, RecipeSerializer
 from ..models import *
 # General - View Routes
@@ -30,7 +29,7 @@ def getRecipes(request, pk=None):
 
     friends = CustomUser.objects.get(id=request.user.id).friends.all()
     recipes = Recipe.objects.filter(user__in = friends)
-
+    
     if pk:
         recipe = Recipe.objects.get(id=pk)
         if recipe.user in friends or recipe.user == request.user:
@@ -39,8 +38,7 @@ def getRecipes(request, pk=None):
         else:
             return Response({"message":"you must be friends with this user to view their recipe"})
 
-            
-
+    
     serializer = RecipeSerializer(recipes, many=True)
 
     return Response(serializer.data) 

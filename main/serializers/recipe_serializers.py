@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User 
 from ..models import *
+# from .user_serializers import UserRelatedField
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,7 +34,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ['id','title', 'user', 'catagory', 'description', 'ingredients', 'method', 'comments', 'recipe_images']
+        fields = ['id','title', 'user', 'author', 'catagory', 'description', 'ingredients', 'method', 'comments', 'recipe_images']
 
 # class MyRecipesSerializer(serializers.ModelSerializer):
 
