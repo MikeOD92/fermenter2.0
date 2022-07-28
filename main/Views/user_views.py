@@ -92,6 +92,8 @@ def profile_view(request, username = None):
 
     return Response(serializer.data) 
 
+######### Friend Requests 
+
 @api_view(['GET','POST'])
 @permission_classes([IsAuthenticated])
 def send_friendrequest(request, friendId):
